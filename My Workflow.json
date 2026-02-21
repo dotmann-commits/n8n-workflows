@@ -1,0 +1,375 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "995be48f-adcc-436d-b4be-3dbb2c5be5e5",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CEhqMBObCqGHdMWD",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a8b4da92-4fa6-4656-bea9-310d97a5779e",
+              "name": "body",
+              "value": "={{ $json[\"snippet\"] }}\n",
+              "type": "string"
+            },
+            {
+              "id": "69e2b083-4c29-4509-b785-45d96712e76f",
+              "name": "Subject",
+              "value": "={{ $json.Subject }}",
+              "type": "string"
+            },
+            {
+              "id": "24b2aa00-0b38-4804-977a-ea8a0962e2c5",
+              "name": "=sender",
+              "value": "={{ $json.From }}",
+              "type": "string"
+            },
+            {
+              "id": "b1bbf589-217c-49d0-b288-8d8d18bec474",
+              "name": "timestamp",
+              "value": "={{ $now }}",
+              "type": "string"
+            },
+            {
+              "id": "861c3d03-33db-4570-bda6-f81a30650811",
+              "name": "status",
+              "value": "new",
+              "type": "string"
+            },
+            {
+              "id": "1e60f8fe-0a2e-4135-8dd6-3d1e3a419ad3",
+              "name": "clean_body",
+              "value": "={{ $json[\"snippet\"].replace(/\\n/g, \" \").substring(0, 1000) }}",
+              "type": "string"
+            },
+            {
+              "id": "c2184995-d399-40db-b800-2d519c9fd0fb",
+              "name": "category",
+              "value": "={{ $json }}",
+              "type": "string"
+            },
+            {
+              "id": "a2f15518-f303-4686-84be-883587cc319e",
+              "name": "email_text",
+              "value": "={{$json.body || $json.snippet}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "1e6afe25-0045-491f-995b-a618ac014c3f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ",
+          "mode": "list",
+          "cachedResultName": "Ticket Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now }}",
+            "Sender": "={{ $json.from.email }}",
+            "Subject": "={{ $json.subject }}",
+            "Body": "={{ $json.clean_body }}",
+            "Status": "={{ $json.status }}",
+            "Category": "={{ $json.category }}",
+            "Sentiment": "={{ $json.sentiment }}",
+            "Score": "={{ $json.lead_score }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Sender",
+              "displayName": "Sender",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Body",
+              "displayName": "Body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Sentiment",
+              "displayName": "Sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        880,
+        0
+      ],
+      "id": "3406238c-5bb4-42ea-b0b7-3f81d4b6e4ec",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dAXvKTWVIxw8t8aE",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=REMOVED_API_KEY",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"text\": \"Classify this email. Return ONLY this JSON, no extra text: {\\\"category\\\": \\\"Support or Sales or Complaint or Urgent or Spam\\\", \\\"sentiment\\\": \\\"Positive or Neutral or Negative\\\", \\\"lead_score\\\": \\\"1 to 10\\\"}. Subject: {{ $json['Subject'] }}. Body: {{ $json['snippet'] }}\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "1cdf940c-9484-479a-b3c5-d3dd8e43e9b6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be0d592f-d319-4b53-aa5c-b3ec0e3f186e",
+              "name": "category",
+              "value": "={{ JSON.parse($json.candidates[0].content.parts[0].text.replace(/```json\\n/g, '').replace(/```/g, '').trim()).category }}",
+              "type": "string"
+            },
+            {
+              "id": "5c794364-c18e-42fd-8ff9-83fdf3c07d65",
+              "name": "sentiment",
+              "value": "={{ JSON.parse($json.candidates[0].content.parts[0].text.replace(/```json\\n/g, '').replace(/```/g, '').trim()).sentiment }}",
+              "type": "string"
+            },
+            {
+              "id": "00d02061-a3b1-4d27-b343-4ec88d16d087",
+              "name": "lead_score",
+              "value": "={{ JSON.parse($json.candidates[0].content.parts[0].text.replace(/```json\\n/g, '').replace(/```/g, '').trim()).lead_score }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        656,
+        0
+      ],
+      "id": "3506e419-54ee-4cd3-b1b5-8a528d165281",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        656,
+        -160
+      ],
+      "id": "1ba0447d-c6c1-4fb4-9c41-fc1f4c663c50",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Lisbon",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "e53506d0-3497-4fd6-ba07-d011a0d73212",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3242f18d8912c212c5f65ae728e7a11d779f5cf983d33b1f25e894f45039cd6f"
+  },
+  "id": "4FYoUSYWMiKWu9a0",
+  "tags": []
+}
