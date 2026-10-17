@@ -22,7 +22,7 @@
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
-          "id": "CEhqMBObCqGHdMWD",
+          "id": "YOUR_CREDENTIAL_ID",
           "name": "Gmail account"
         }
       }
@@ -98,17 +98,13 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ",
-          "mode": "list",
-          "cachedResultName": "Ticket Database",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ/edit?usp=drivesdk"
+          "value": "YOUR_SPREADSHEET_ID",
+          "mode": "id"
         },
         "sheetName": {
           "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-XeYzJ-M9x-SJSAVfVtf-MGfXS9kPQ75Bu_n-RNgfUQ/edit#gid=0"
+          "value": "Sheet1",
+          "mode": "name"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -215,7 +211,7 @@
       "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "dAXvKTWVIxw8t8aE",
+          "id": "YOUR_CREDENTIAL_ID",
           "name": "Google Sheets account"
         }
       }
@@ -223,7 +219,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=REMOVED_API_KEY",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=YOUR_GEMINI_API_KEY",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -356,7 +352,7 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
@@ -365,11 +361,8 @@
     "timezone": "Europe/Lisbon",
     "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "e53506d0-3497-4fd6-ba07-d011a0d73212",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "3242f18d8912c212c5f65ae728e7a11d779f5cf983d33b1f25e894f45039cd6f"
+    "templateCredsSetupCompleted": false
   },
-  "id": "4FYoUSYWMiKWu9a0",
   "tags": []
 }
